@@ -42,6 +42,7 @@ class _NewTransactionState extends State<NewTransaction> {
               decoration: InputDecoration(labelText: "Title"),
               controller: titleController,
               keyboardType: TextInputType.text,
+              onSubmitted: (_) => submitData(),
             ),
             TextField(
               decoration: InputDecoration(labelText: "Amount"),
