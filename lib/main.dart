@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         fontFamily: "Quicksand",
         textTheme: ThemeData.light().textTheme.copyWith(
               title: TextStyle(
-                fontFamily: "OpenSans",
+                fontFamily: "Quicksand",
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
               ),
@@ -49,7 +49,11 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [];
 
   List<Transaction> get _recentTransactions {
-    
+    final oneWeekAgo = DateTime.now().subtract(Duration(days: 7));
+
+    return _userTransactions.where((it) {
+      return it.date.isAfter(oneWeekAgo);
+    }).toList();
   }
 
   void _addNewTransaction(String txTitle, double txAmount) {
@@ -94,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(child: Chart(_userTransactions)),
+            Container(child: Chart(_recentTransactions)),
             TransactionList(_userTransactions)
           ],
         ),
