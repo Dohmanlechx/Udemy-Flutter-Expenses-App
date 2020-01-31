@@ -8,24 +8,40 @@ import 'widgets/chart.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  final myTextStyle = const TextStyle(
+    fontFamily: "Quicksand",
+    fontWeight: FontWeight.bold,
+    fontSize: 18,
+  );
+
+  final myTextStyleWhite = const TextStyle(
+    fontFamily: "Quicksand",
+    fontWeight: FontWeight.bold,
+    fontSize: 18,
+    color: Colors.white,
+  );
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.purple,
         accentColor: Colors.amberAccent,
+        errorColor: Colors.red,
         fontFamily: "Quicksand",
         textTheme: ThemeData.light().textTheme.copyWith(
-              title: TextStyle(
-                fontFamily: "Quicksand",
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
-            ),
+            title: myTextStyle,
+            subhead: myTextStyle,
+            subtitle: myTextStyleWhite,
+            button: TextStyle(
+              fontFamily: "Quicksand",
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            )),
         appBarTheme: AppBarTheme(
           textTheme: ThemeData.light().textTheme.copyWith(
                 title: TextStyle(
-                  fontFamily: "OpenSans",
+                  fontFamily: "Quicksand",
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
@@ -56,12 +72,16 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  void _addNewTransaction(String txTitle, double txAmount) {
+  void _addNewTransaction(
+    String txTitle,
+    double txAmount,
+    DateTime chosenDate,
+  ) {
     final newTransaction = Transaction(
       id: DateTime.now().toString(),
       title: txTitle,
       amount: txAmount,
-      date: DateTime.now(),
+      date: chosenDate,
     );
 
     setState(() {
@@ -82,6 +102,12 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((it) => it.id == id);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,7 +125,10 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Container(child: Chart(_recentTransactions)),
-            TransactionList(_userTransactions)
+            TransactionList(
+              transactions: _userTransactions,
+              onDeletePressed: _deleteTransaction,
+            )
           ],
         ),
       ),
