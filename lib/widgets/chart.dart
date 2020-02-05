@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../widgets/chart_bar.dart';
+import './chart_bar.dart';
 import '../models/transaction.dart';
 
 class Chart extends StatelessWidget {
@@ -14,16 +14,13 @@ class Chart extends StatelessWidget {
       final weekDay = DateTime.now().subtract(
         Duration(days: index),
       );
-
       var totalSum = 0.0;
 
-      for (var transaction in recentTransactions) {
-        final transactionDate = transaction.date;
-
-        if (transactionDate.day == weekDay.day &&
-            transactionDate.month == weekDay.month &&
-            transactionDate.year == weekDay.year) {
-          totalSum += transaction.amount;
+      for (var i = 0; i < recentTransactions.length; i++) {
+        if (recentTransactions[i].date.day == weekDay.day &&
+            recentTransactions[i].date.month == weekDay.month &&
+            recentTransactions[i].date.year == weekDay.year) {
+          totalSum += recentTransactions[i].amount;
         }
       }
 
@@ -36,7 +33,7 @@ class Chart extends StatelessWidget {
 
   double get totalSpending {
     return groupedTransactionValues.fold(0.0, (sum, item) {
-      return sum + item["amount"];
+      return sum + item['amount'];
     });
   }
 
@@ -45,20 +42,19 @@ class Chart extends StatelessWidget {
     return Card(
       elevation: 6,
       margin: EdgeInsets.all(20),
-      child: Container(
+      child: Padding(
         padding: EdgeInsets.all(10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: groupedTransactionValues.map((data) {
             return Flexible(
-              flex: 2,
               fit: FlexFit.tight,
               child: ChartBar(
-                label: data["day"],
-                spendingAmount: data["amount"],
+                label: data['day'],
+                spendingAmount: data['amount'],
                 spendingPercentageOfTotal: totalSpending == 0.0
                     ? 0.0
-                    : (data["amount"] as double) / totalSpending,
+                    : (data['amount'] as double) / totalSpending,
               ),
             );
           }).toList(),
