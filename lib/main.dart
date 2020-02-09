@@ -15,6 +15,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print("build() MyApp");
     return MaterialApp(
       title: 'Personal Expenses',
       theme: ThemeData(
@@ -97,6 +98,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    print("build() MyHomePageState");
+
     final mq = MediaQuery.of(context);
     final isLandscape = mq.orientation == Orientation.landscape;
 
@@ -149,6 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     activeColor: Theme.of(context).accentColor,
                     value: _showChart,
                     onChanged: (newValue) {
+
                       setState(() {
                         _showChart = newValue;
                       });
