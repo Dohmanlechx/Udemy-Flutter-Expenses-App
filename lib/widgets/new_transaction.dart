@@ -7,7 +7,7 @@ import '../widgets/adaptive_button.dart';
 class NewTransaction extends StatefulWidget {
   final Function addTransaction;
 
-  NewTransaction(this.addTransaction);
+  NewTransaction(this.addTransaction) {}
 
   @override
   _NewTransactionState createState() => _NewTransactionState();
@@ -17,6 +17,12 @@ class _NewTransactionState extends State<NewTransaction> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
   DateTime _selectedDate;
+
+  @override
+  void didUpdateWidget(NewTransaction oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    print("didUpdateWidget()");
+  }
 
   void _submitData() {
     final enteredTitle = _titleController.text;
@@ -50,7 +56,6 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    print("build() NewTransaction");
     return SingleChildScrollView(
       child: Card(
         elevation: 5,

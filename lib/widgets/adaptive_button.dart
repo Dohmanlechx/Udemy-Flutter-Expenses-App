@@ -14,7 +14,6 @@ class AdaptiveButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("build() Adaptivebutton");
     return Platform.isIOS
         ? CupertinoButton(
             child: Text(
