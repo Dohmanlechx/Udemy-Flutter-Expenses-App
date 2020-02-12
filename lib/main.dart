@@ -152,7 +152,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     activeColor: Theme.of(context).accentColor,
                     value: _showChart,
                     onChanged: (newValue) {
-
                       setState(() {
                         _showChart = newValue;
                       });
